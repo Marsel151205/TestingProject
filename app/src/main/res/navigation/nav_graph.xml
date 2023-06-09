@@ -9,5 +9,20 @@
         android:id="@+id/listFragment"
         android:name="com.geeks.testingproject.presentation.ui.fragments.list.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_listFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.geeks.testingproject.presentation.ui.fragments.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail">
+
+        <argument
+            android:name="id"
+            android:defaultValue="null"
+            app:argType="string" />
+    </fragment>
 </navigation>

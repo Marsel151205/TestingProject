@@ -8,23 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.geeks.testingproject.R
 import com.geeks.testingproject.databinding.FragmentListBinding
 import com.geeks.testingproject.domain.common.Either
 import com.geeks.testingproject.presentation.base.BaseFragment
+import com.geeks.testingproject.presentation.models.FilmModelUI
 import com.geeks.testingproject.presentation.models.toUI
+import com.geeks.testingproject.presentation.ui.OnItemClickListener
 import com.geeks.testingproject.presentation.ui.adapters.FilmsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.subscribe
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListFragment : BaseFragment<FragmentListBinding, ListViewModel>(R.layout.fragment_list) {
+class ListFragment : BaseFragment<FragmentListBinding, ListViewModel>(R.layout.fragment_list),
+    OnItemClickListener {
 
     override val binding: FragmentListBinding by viewBinding(FragmentListBinding::bind)
     override val viewModel: ListViewModel by viewModels()
-    private val filmsAdapter = FilmsAdapter()
+    private val filmsAdapter = FilmsAdapter(this)
 
 
     override fun initialize() {
@@ -45,5 +49,11 @@ class ListFragment : BaseFragment<FragmentListBinding, ListViewModel>(R.layout.f
 
     private fun setupRecyclerView() {
         binding.rvFilms.adapter = filmsAdapter
+    }
+
+    override fun onItemClick(model: FilmModelUI) {
+        findNavController().navigate(
+            ListFragmentDirections.actionListFragmentToDetailFragment().setId(model.id)
+        )
     }
 }

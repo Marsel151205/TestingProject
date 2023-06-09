@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface FilmRepository {
 
     fun getFilm(): Flow<Either<String, List<FilmModel>>>
+
+    fun getDetail(id: String): Flow<Either<String, FilmModel>>
 }

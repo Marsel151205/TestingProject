@@ -7,8 +7,9 @@ import com.geeks.testingproject.presentation.models.FilmModelUI
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.geeks.testingproject.databinding.ItemListBinding
 import com.geeks.testingproject.presentation.base.BaseDiffUtilItemCallback
+import com.geeks.testingproject.presentation.ui.OnItemClickListener
 
-class FilmsAdapter() :
+class FilmsAdapter(private val onItemClickListener: OnItemClickListener) :
     ListAdapter<FilmModelUI, FilmsAdapter.FilmsViewHolder>(BaseDiffUtilItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsViewHolder =
@@ -25,6 +26,11 @@ class FilmsAdapter() :
         fun onBind(filmModelUI: FilmModelUI) {
             with(binding) {
                 tvTitle.text = filmModelUI.title
+                tvOriginalTitle.text = filmModelUI.originalTitle
+            }
+
+            itemView.setOnClickListener {
+                onItemClickListener.onItemClick(filmModelUI)
             }
         }
     }

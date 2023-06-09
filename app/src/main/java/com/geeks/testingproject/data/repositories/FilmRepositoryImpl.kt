@@ -15,4 +15,8 @@ class FilmRepositoryImpl @Inject constructor(
             it.toDomain()
         }
     }
+
+    override fun getDetail(id: String) = doRequest {
+        apiService.fetchDetail(id).body()?.toDomain()
+    }
 }
